@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: app
-          image: nginx:1.12 # это просто плэйсхолдер
+          image:  __IMAGE__
           env:
             - name: DB_HOST
               value: database
