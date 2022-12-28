@@ -37,7 +37,8 @@ build:
     - kubectl config set-context ci --cluster=k8s --user=ci
     - kubectl config use-context ci
   script:
-    - kubectl set image deployment/$CI_PROJECT_NAME *=$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG.$CI_PIPELINE_ID --namespace $CI_ENVIRONMENT_NAME
+    - sed -i "s,__IMAGE__,$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG.$CI_PIPELINE_ID,g" kube/deployment.yaml
+    - kubectl apply -f kube/ --namespace $CI_ENVIRONMENT_NAME
     - kubectl rollout status deployment/$CI_PROJECT_NAME --namespace $CI_ENVIRONMENT_NAME || (kubectl rollout undo deployment/$CI_PROJECT_NAME --namespace $CI_ENVIRONMENT_NAME && exit 1)
 
 deploy:stage:
