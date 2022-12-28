@@ -29,7 +29,7 @@ build:
 
 .deploy: &deploy
   stage: deploy
-  image: bitnami/kubectl:1.16
+  image: bitnami/kubectl:1.22
   before_script:
     - export KUBECONFIG=/tmp/.kubeconfig
     - kubectl config set-cluster k8s --insecure-skip-tls-verify=true --server=$K8S_API_URL
@@ -38,6 +38,7 @@ build:
     - kubectl config use-context ci
   script:
     - sed -i "s,__IMAGE__,$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG.$CI_PIPELINE_ID,g" kube/deployment.yaml
+    - sed -i "s,__HOST__,$CI_ENVIRONMENT_NAME,g" kube/ingress.yaml
     - kubectl apply -f kube/ --namespace $CI_ENVIRONMENT_NAME
     - kubectl rollout status deployment/$CI_PROJECT_NAME --namespace $CI_ENVIRONMENT_NAME || (kubectl rollout undo deployment/$CI_PROJECT_NAME --namespace $CI_ENVIRONMENT_NAME && exit 1)
 
