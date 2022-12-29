@@ -6,7 +6,7 @@ on: push
 jobs:
   test:
     name: Test
-    runs-on: golang-1.14
+    runs-on: golang-latest #1.14
     steps:
       - name: Testing
         run: echo "ОК"
