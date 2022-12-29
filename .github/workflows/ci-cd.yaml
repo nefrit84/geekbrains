@@ -43,5 +43,5 @@ jobs:
         with:
           push: true
           tags: |
-            ghcr.io/username/package:latest
-            ghcr.io/username/package:${{ github.sha }}
+            ghcr.io/nefrit84/app:latest
+            ghcr.io/nefrit84/app:${{ github.sha }}
