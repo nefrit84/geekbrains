@@ -6,9 +6,24 @@ on: push
 jobs:
   test:
     name: Test
-    runs-on: golang-1.14
+    runs-on: ubuntu-latest
     steps:
-      - name: Testing
+      - uses: actions/checkout@v2
+      - name: Setup Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: "1.14.0"
+      - name: Install dependencies
+        run: |
+          go version
+          go get -u golang.org/x/lint/golint
+      - name: Run build
+        run: go build .
+      - name: Run vet & lint
+        run: |
+          go vet .
+          golint .
+      - name: Test End
         run: echo "ОК"
   build:
     name: Build
