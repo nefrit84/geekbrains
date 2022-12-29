@@ -17,8 +17,6 @@ jobs:
         run: |
           go version
           go get -u golang.org/x/lint/golint
-      - name: Run build
-        run: go build /app/.
       - name: Run vet & lint
         run: |
           go vet .
