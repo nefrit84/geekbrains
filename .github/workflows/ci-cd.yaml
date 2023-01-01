@@ -65,7 +65,7 @@ jobs:
     steps:
       - run: export KUBECONFIG=/tmp/.kubeconfig
       - run: kubectl config set-cluster kubernetes-cluster-4420 --insecure-skip-tls-verify=true --server=$K8S_API_URL
-      - run: kubectl config set-credentials default/kubernetes-cluster-4420 --token=$(echo $K8S_STAGE_CI_TOKEN | base64 --decode)
+      - run: kubectl config set-credentials kubernetes-cluster-4420 --token=$(echo $K8S_STAGE_CI_TOKEN | base64 --decode)
       - run: kubectl config set-context default/kubernetes-cluster-4420 --cluster=kubernetes-cluster-4420 --user=kubernetes-cluster-4420
       - run: kubectl config use-context default/kubernetes-cluster-4420
       - run: kubectl config view --flatten
