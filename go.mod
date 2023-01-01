@@ -1,4 +1,4 @@
-module github.com/pauljamm/geekbrains-conteinerization/tree/master/practice/8.ci-cd/app
+module github.com/pauljamm/geekbrains-conteinerization/practice/8.ci-cd/app
 
 go 1.14
 
