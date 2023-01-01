@@ -59,7 +59,8 @@ jobs:
     env:
       K8S_API_URL: https://87.239.106.21:6443
       K8S_STAGE_CI_TOKEN: "ZXlKaGJHY2lPaUpTVXpJMU5pSXNJbXRwWkNJNklqVlNjRE54YkVWWWF6UlpNVmh5UTBWdlducFNORlZmV0cxcU56RjZkRmwzY21sTU5rSkVkMlJ3TldzaWZRLmV5SnBjM01pT2lKcmRXSmxjbTVsZEdWekwzTmxjblpwWTJWaFkyTnZkVzUwSWl3aWEzVmlaWEp1WlhSbGN5NXBieTl6WlhKMmFXTmxZV05qYjNWdWRDOXVZVzFsYzNCaFkyVWlPaUp6ZEdGblpTSXNJbXQxWW1WeWJtVjBaWE11YVc4dmMyVnlkbWxqWldGalkyOTFiblF2YzJWamNtVjBMbTVoYldVaU9pSmtaWEJzYjNrdGRHOXJaVzR0TW0xa2FtUWlMQ0pyZFdKbGNtNWxkR1Z6TG1sdkwzTmxjblpwWTJWaFkyTnZkVzUwTDNObGNuWnBZMlV0WVdOamIzVnVkQzV1WVcxbElqb2laR1Z3Ykc5NUlpd2lhM1ZpWlhKdVpYUmxjeTVwYnk5elpYSjJhV05sWVdOamIzVnVkQzl6WlhKMmFXTmxMV0ZqWTI5MWJuUXVkV2xrSWpvaU1qSmpPV013WW1RdFkyTTVaQzAwWVdObUxXRTBNbU10TUdVeVpURTFOVGN6TUdSbElpd2ljM1ZpSWpvaWMzbHpkR1Z0T25ObGNuWnBZMlZoWTJOdmRXNTBPbk4wWVdkbE9tUmxjR3h2ZVNKOS5zRjV2ZjBaV3VYc2tyVWZJQV9VQmJGRnNsaU5CZUVsbGt4M1RBbVRKZE1tNUIycjVQS0VvQ1FnOFFJMW1oNlMyQ3RoM1Nnb3pMb2FxbjJwV0hySWVQS2dTcUZZdV9wZ2d1WkllRkxEUkVLOEpBQWpwb3dQWjRrRG9iTml2dWNVbnY4M3ZSdlVVakNhbUNCQUZWSnBJZEhsR0hTakltQkpxRXZ6OTFreUttZmNZM080Wm9SbndCYTdyYV9RV010REk5aS1ib1R0RHk1QXJtVkJaUGhaTWxVc3NzUGhPWWd2NFZSQTdyS2xIMURiOEJVWGlNNTVJbGl5OWZlTVNsM2ZKS1BzQjJtZWppSFl5NUJKbWFvSk9pbEZwMDZfb3JoQ0VxMEFxV3VEdzRJVVdtUXFwSVJRaUhucVRGYllNSnZSZk9HWExiNm9Qb0VDb2RQQjdlUUZhQmc="
-      CI_ENVIRONMENT_NAME: stage
+      CI_STAGE_NAME: stage
+      CI_PROD_NAME: prod
       CI_PROJECT_NAME: ${{ github.workflow }}
       CI_REGISTRY_IMAGE: ghcr.io/${{ github.repository }}:${{ github.run_id }}
     steps:
@@ -68,5 +69,5 @@ jobs:
       - run: kubectl config set-credentials kubernetes-cluster-4420 --token=$(echo $K8S_STAGE_CI_TOKEN | base64 --decode)
       - run: kubectl config set-context default/kubernetes-cluster-4420 --cluster=kubernetes-cluster-4420 --user=kubernetes-cluster-4420
       - run: kubectl config use-context default/kubernetes-cluster-4420
-      - run: kubectl config view --flatten
-      - run: kubectl set image deployment/$CI_PROJECT_NAME *=$CI_REGISTRY_IMAGE --namespace $CI_ENVIRONMENT_NAME
+      - run: kubectl set image deployment/$CI_PROJECT_NAME *=$CI_REGISTRY_IMAGE --namespace $CI_STAGE_NAME
+      - run: kubectl set image deployment/$CI_PROJECT_NAME *=$CI_REGISTRY_IMAGE --namespace $CI_PROD_NAME
